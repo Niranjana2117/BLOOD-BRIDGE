@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donor Profile - {{ app_name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-icon">🩸</span>
+                <span class="logo-text">{{ app_name }}</span>
+            </div>
+            <ul class="nav-menu">
+                <li><span class="nav-user-info">Welcome, {{ current_user.name }}</span></li>
+                <li><a href="{{ url_for('view_donors') }}" class="nav-link">Back to Donors</a></li>
+                <li><a href="{{ url_for('dashboard') }}" class="nav-link">Dashboard</a></li>
+                <li><a href="{{ url_for('logout') }}" class="nav-link logout-link">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                    <span class="close-alert">&times;</span>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <section class="donor-profile-section">
+            <div class="donor-profile-container">
+                <!-- Donor Profile Card -->
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <h1>{{ donor.name }}</h1>
+                        <span class="profile-blood-group">{{ donor.blood_group }}</span>
+                    </div>
+
+                    <div class="profile-details">
+                        <div class="detail-group">
+                            <h3>Profile Information</h3>
+                            <p><strong>Email:</strong> {{ donor.email }}</p>
+                            <p><strong>Blood Group:</strong> {{ donor.blood_group }}</p>
+                            <p><strong>Member Since:</strong> {{ donor.registered_at }}</p>
+                        </div>
+
+                        <div class="detail-group">
+                            <h3>🤖 Compatible Requests</h3>
+                            {% if compatible_requests %}
+                                <p><strong>{{ compatible_requests|length }}</strong> active request(s) compatible with {{ donor.blood_group }}:</p>
+                                <ul>
+                                    {% for req in compatible_requests %}
+                                        <li>
+                                            <strong>{{ req.blood_group }}</strong> ({{ req.units }} units)
+                                            - Requested by: {{ req.requestor_name }}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <p>No active compatible requests at this time.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Donation History Card -->
+                <div class="donation-history-card">
+                    <h2>Donation History</h2>
+                    
+                    {% if donation_history %}
+                        <div class="history-list">
+                            {% for donation in donation_history %}
+                                <div class="history-item">
+                                    <div class="history-info">
+                                        <p><strong>Blood Group:</strong> {{ donation.blood_group }}</p>
+                                        <p><strong>Requestor:</strong> {{ donation.requestor_email }}</p>
+                                        <p><strong>Date & Time:</strong> {{ donation.date_time }}</p>
+                                        <p><strong>Request ID:</strong> {{ donation.request_id }}</p>
+                                    </div>
+                                    <span class="donation-count-badge">Donation #{{ loop.index }}</span>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="history-stats">
+                            <p class="total-donations">Total Donations: <strong>{{ donation_history|length }}</strong></p>
+                        </div>
+                    {% else %}
+                        <div class="empty-state">
+                            <p>This donor hasn't made any donations yet.</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 BLOOD Bank Application. {{ app_quote }}</p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.close-alert').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.parentElement.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>

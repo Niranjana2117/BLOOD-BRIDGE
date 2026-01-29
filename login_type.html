@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Login Type - {{ app_name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-icon">🩸</span>
+                <span class="logo-text">{{ app_name }}</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="{{ url_for('index') }}" class="nav-link">Home</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                    <span class="close-alert">&times;</span>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <section class="auth-section">
+            <div class="auth-container">
+                <h1>Login to Your Account</h1>
+                <p class="auth-subtitle">Select your role to login</p>
+                
+                <div class="role-selector">
+                    <div class="role-card donor-card">
+                        <div class="role-icon">💉</div>
+                        <h2>Login as Donor</h2>
+                        <p>Access your donor account</p>
+                        <a href="{{ url_for('login', user_type='donor') }}" class="btn btn-primary">Login as Donor</a>
+                    </div>
+
+                    <div class="role-card requestor-card">
+                        <div class="role-icon">🏥</div>
+                        <h2>Login as Requestor</h2>
+                        <p>Access your requestor account</p>
+                        <a href="{{ url_for('login', user_type='requestor') }}" class="btn btn-secondary">Login as Requestor</a>
+                    </div>
+                </div>
+
+                <div class="auth-footer">
+                    <p>Don't have an account? <a href="{{ url_for('register_type') }}" class="link">Register here</a></p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 BLOOD Bank Application. {{ app_quote }}</p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.close-alert').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.parentElement.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>

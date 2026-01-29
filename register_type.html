@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Registration Type - {{ app_name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-icon">🩸</span>
+                <span class="logo-text">{{ app_name }}</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="{{ url_for('index') }}" class="nav-link">Home</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                    <span class="close-alert">&times;</span>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <section class="auth-section">
+            <div class="auth-container">
+                <h1>Choose Your Role</h1>
+                <p class="auth-subtitle">Select how you want to participate in the blood donation program</p>
+                
+                <div class="role-selector">
+                    <div class="role-card donor-card">
+                        <div class="role-icon">💉</div>
+                        <h2>Register as Donor</h2>
+                        <p>You want to donate blood and help save lives</p>
+                        <div class="role-benefits">
+                            <ul>
+                                <li>Register with your blood type</li>
+                                <li>Browse donation requests</li>
+                                <li>Accept compatible requests</li>
+                                <li>Track donation history</li>
+                            </ul>
+                        </div>
+                        <a href="{{ url_for('register', user_type='donor') }}" class="btn btn-primary">Register as Donor</a>
+                    </div>
+
+                    <div class="role-card requestor-card">
+                        <div class="role-icon">🏥</div>
+                        <h2>Register as Requestor</h2>
+                        <p>You need blood donation for yourself or someone else</p>
+                        <div class="role-benefits">
+                            <ul>
+                                <li>Create blood requests</li>
+                                <li>Specify blood group needed</li>
+                                <li>Find compatible donors</li>
+                                <li>Confirm receipt of donation</li>
+                            </ul>
+                        </div>
+                        <a href="{{ url_for('register', user_type='requestor') }}" class="btn btn-secondary">Register as Requestor</a>
+                    </div>
+                </div>
+
+                <div class="auth-footer">
+                    <p>Already have an account? <a href="{{ url_for('login_type') }}" class="link">Login here</a></p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 BLOOD Bank Application. {{ app_quote }}</p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.close-alert').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.parentElement.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>

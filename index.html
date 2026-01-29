@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ app_name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-icon">🩸</span>
+                <span class="logo-text">{{ app_name }}</span>
+            </div>
+            <ul class="nav-menu">
+                {% if current_user %}
+                    <li><span class="nav-user-info">Welcome, {{ current_user.name }} ({{ current_user.role }})</span></li>
+                    <li><a href="{{ url_for('dashboard') }}" class="nav-link">Dashboard</a></li>
+                    <li><a href="{{ url_for('logout') }}" class="nav-link logout-link">Logout</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('register_type') }}" class="nav-link">Register</a></li>
+                    <li><a href="{{ url_for('login_type') }}" class="nav-link">Login</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                    <span class="close-alert">&times;</span>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <section class="hero">
+            <div class="hero-content">
+                <h1>{{ app_name }}</h1>
+                <p class="hero-quote">"{{ app_quote }}"</p>
+                <p class="hero-subtitle">A modern blood donation and request management platform</p>
+                
+                {% if not current_user %}
+                    <div class="hero-buttons">
+                        <a href="{{ url_for('register_type') }}" class="btn btn-primary">Start as Donor</a>
+                        <a href="{{ url_for('register_type') }}" class="btn btn-secondary">Start as Requestor</a>
+                    </div>
+                {% else %}
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-primary">Go to Dashboard</a>
+                {% endif %}
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features">
+            <h2>Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">💻</div>
+                    <h3>User Registration</h3>
+                    <p>Register as a donor or requestor with your blood type</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔐</div>
+                    <h3>Secure Login</h3>
+                    <p>Password-protected accounts with session management</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🩸</div>
+                    <h3>Blood Requests</h3>
+                    <p>Create and manage blood donation requests</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI Compatibility</h3>
+                    <p>Smart blood type matching using compatibility AI engine</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Donation History</h3>
+                    <p>Track your donations and contribution history</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Real-time Status</h3>
+                    <p>Monitor request status in real-time</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section class="how-it-works">
+            <h2>How It Works</h2>
+            <div class="flow-container">
+                <div class="flow-item">
+                    <h3>For Donors</h3>
+                    <ol>
+                        <li>Register as a Donor with your blood type</li>
+                        <li>Login to your dashboard</li>
+                        <li>View compatible blood requests</li>
+                        <li>Accept a request to donate</li>
+                        <li>Track your donation history</li>
+                    </ol>
+                </div>
+                <div class="flow-divider">→</div>
+                <div class="flow-item">
+                    <h3>For Requestors</h3>
+                    <ol>
+                        <li>Register as a Requestor</li>
+                        <li>Login to your dashboard</li>
+                        <li>Create a blood request</li>
+                        <li>View compatible donors (AI-matched)</li>
+                        <li>Confirm when donation is received</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technology Section -->
+        <section class="tech-stack">
+            <h2>Technology Stack</h2>
+            <div class="tech-items">
+                <span class="tech-badge">Flask</span>
+                <span class="tech-badge">Python</span>
+                <span class="tech-badge">Jinja2</span>
+                <span class="tech-badge">AI Engine</span>
+                <span class="tech-badge">UUID</span>
+                <span class="tech-badge">Session Management</span>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 BLOOD Bank Application. All rights reserved.</p>
+        <p>Saving Lives Through Blood Donation</p>
+    </footer>
+
+    <script>
+        // Close alert messages
+        document.querySelectorAll('.close-alert').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.parentElement.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>

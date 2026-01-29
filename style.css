@@ -1,0 +1,1246 @@
+/* ========================================================================
+   BLOOD BANK APPLICATION - STYLESHEET
+   Milestone 1: Local Development
+   ======================================================================== */
+
+/* ========================================================================
+   GLOBAL STYLES
+   ======================================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Colors */
+    --primary-color: #e74c3c;      /* Blood red */
+    --primary-dark: #c0392b;       /* Darker red */
+    --secondary-color: #3498db;    /* Blue */
+    --success-color: #27ae60;      /* Green */
+    --warning-color: #f39c12;      /* Orange */
+    --danger-color: #e74c3c;       /* Red */
+    --info-color: #3498db;         /* Blue */
+    
+    /* Neutral Colors */
+    --light-gray: #ecf0f1;
+    --medium-gray: #95a5a6;
+    --dark-gray: #2c3e50;
+    --white: #ffffff;
+    --black: #000000;
+    
+    /* Font */
+    --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --font-size-base: 16px;
+    --font-size-sm: 14px;
+    --font-size-lg: 18px;
+    
+    /* Spacing */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    --spacing-xxl: 48px;
+}
+
+body {
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    color: var(--dark-gray);
+    background-color: #f5f6fa;
+    line-height: 1.6;
+}
+
+/* ========================================================================
+   NAVIGATION BAR
+   ======================================================================== */
+
+.navbar {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: var(--white);
+    padding: var(--spacing-md) 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 var(--spacing-md);
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.logo-icon {
+    font-size: 32px;
+}
+
+.logo-text {
+    font-size: 20px;
+    white-space: nowrap;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: var(--spacing-lg);
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.nav-link {
+    color: var(--white);
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+    font-weight: 500;
+}
+
+.nav-link:hover {
+    opacity: 0.8;
+}
+
+.logout-link {
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: 4px;
+}
+
+.nav-user-info {
+    font-size: var(--font-size-sm);
+    opacity: 0.9;
+}
+
+/* ========================================================================
+   ALERTS & MESSAGES
+   ======================================================================== */
+
+.alert {
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.alert-success {
+    background-color: #d4edda;
+    border-left: 4px solid var(--success-color);
+    color: #155724;
+}
+
+.alert-warning {
+    background-color: #fff3cd;
+    border-left: 4px solid var(--warning-color);
+    color: #856404;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    border-left: 4px solid var(--danger-color);
+    color: #721c24;
+}
+
+.alert-info {
+    background-color: #d1ecf1;
+    border-left: 4px solid var(--info-color);
+    color: #0c5460;
+}
+
+.close-alert {
+    cursor: pointer;
+    font-size: 20px;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.close-alert:hover {
+    opacity: 1;
+}
+
+/* ========================================================================
+   MAIN CONTENT
+   ======================================================================== */
+
+.main-content {
+    max-width: 1200px;
+    margin: var(--spacing-xl) auto;
+    padding: 0 var(--spacing-md);
+    min-height: calc(100vh - 200px);
+}
+
+/* ========================================================================
+   BUTTONS
+   ======================================================================== */
+
+.btn {
+    display: inline-block;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: var(--white);
+}
+
+.btn-secondary:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+}
+
+.btn-success {
+    background-color: var(--success-color);
+    color: var(--white);
+}
+
+.btn-success:hover {
+    background-color: #229954;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(39, 174, 96, 0.3);
+}
+
+.btn-block {
+    display: block;
+    width: 100%;
+}
+
+.btn-sm {
+    padding: 6px 12px;
+    font-size: var(--font-size-sm);
+}
+
+.btn-large {
+    padding: var(--spacing-md) var(--spacing-lg);
+    font-size: var(--font-size-lg);
+}
+
+/* ========================================================================
+   HERO SECTION
+   ======================================================================== */
+
+.hero {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: var(--white);
+    padding: var(--spacing-xxl) var(--spacing-md);
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: var(--spacing-xxl);
+}
+
+.hero-content h1 {
+    font-size: 48px;
+    margin-bottom: var(--spacing-md);
+}
+
+.hero-quote {
+    font-size: 24px;
+    font-style: italic;
+    margin-bottom: var(--spacing-md);
+    opacity: 0.95;
+}
+
+.hero-subtitle {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-lg);
+    opacity: 0.9;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.hero-buttons .btn {
+    min-width: 200px;
+}
+
+/* ========================================================================
+   FEATURES SECTION
+   ======================================================================== */
+
+.features {
+    margin-bottom: var(--spacing-xxl);
+}
+
+.features h2 {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: var(--spacing-xl);
+    color: var(--dark-gray);
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+.feature-card {
+    background: var(--white);
+    padding: var(--spacing-lg);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.feature-icon {
+    font-size: 48px;
+    margin-bottom: var(--spacing-md);
+}
+
+.feature-card h3 {
+    font-size: 20px;
+    margin-bottom: var(--spacing-sm);
+    color: var(--dark-gray);
+}
+
+.feature-card p {
+    color: var(--medium-gray);
+}
+
+/* ========================================================================
+   HOW IT WORKS SECTION
+   ======================================================================== */
+
+.how-it-works {
+    background: var(--white);
+    padding: var(--spacing-xl);
+    border-radius: 8px;
+    margin-bottom: var(--spacing-xxl);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.how-it-works h2 {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: var(--spacing-xl);
+    color: var(--dark-gray);
+}
+
+.flow-container {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: var(--spacing-xl);
+    align-items: center;
+}
+
+.flow-item h3 {
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-md);
+    font-size: 20px;
+}
+
+.flow-item ol {
+    margin-left: var(--spacing-md);
+}
+
+.flow-item li {
+    margin-bottom: var(--spacing-sm);
+    color: var(--dark-gray);
+}
+
+.flow-divider {
+    text-align: center;
+    font-size: 32px;
+    color: var(--primary-color);
+}
+
+@media (max-width: 768px) {
+    .flow-container {
+        grid-template-columns: 1fr;
+    }
+    .flow-divider {
+        transform: rotate(90deg);
+        margin: var(--spacing-md) 0;
+    }
+}
+
+/* ========================================================================
+   TECHNOLOGY STACK
+   ======================================================================== */
+
+.tech-stack {
+    text-align: center;
+    margin-bottom: var(--spacing-xxl);
+}
+
+.tech-stack h2 {
+    font-size: 32px;
+    margin-bottom: var(--spacing-lg);
+    color: var(--dark-gray);
+}
+
+.tech-items {
+    display: flex;
+    gap: var(--spacing-sm);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.tech-badge {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: var(--white);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: 20px;
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+}
+
+/* ========================================================================
+   AUTHENTICATION SECTION
+   ======================================================================== */
+
+.auth-section {
+    padding: var(--spacing-xl) 0;
+}
+
+.auth-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.auth-container h1 {
+    text-align: center;
+    margin-bottom: var(--spacing-md);
+    color: var(--dark-gray);
+}
+
+.auth-subtitle {
+    text-align: center;
+    color: var(--medium-gray);
+    margin-bottom: var(--spacing-xl);
+}
+
+.role-selector {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+.role-card {
+    background: var(--white);
+    padding: var(--spacing-lg);
+    border-radius: 8px;
+    border: 2px solid var(--light-gray);
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.role-card:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 12px rgba(231, 76, 60, 0.2);
+    transform: translateY(-3px);
+}
+
+.donor-card {
+    border-color: #FFE4E1;
+}
+
+.requestor-card {
+    border-color: #E0F2F7;
+}
+
+.role-icon {
+    font-size: 64px;
+    margin-bottom: var(--spacing-md);
+}
+
+.role-card h2 {
+    font-size: 22px;
+    margin-bottom: var(--spacing-sm);
+    color: var(--dark-gray);
+}
+
+.role-card p {
+    color: var(--medium-gray);
+    margin-bottom: var(--spacing-md);
+}
+
+.role-benefits {
+    text-align: left;
+    background: var(--light-gray);
+    padding: var(--spacing-md);
+    border-radius: 4px;
+    margin-bottom: var(--spacing-md);
+}
+
+.role-benefits ul {
+    list-style: none;
+    margin: 0;
+}
+
+.role-benefits li {
+    color: var(--dark-gray);
+    padding: var(--spacing-xs) 0;
+}
+
+.role-benefits li:before {
+    content: "✓ ";
+    color: var(--success-color);
+    font-weight: bold;
+    margin-right: var(--spacing-xs);
+}
+
+.auth-footer {
+    text-align: center;
+    color: var(--medium-gray);
+}
+
+.auth-footer a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+/* ========================================================================
+   FORMS
+   ======================================================================== */
+
+.form-container {
+    background: var(--white);
+    padding: var(--spacing-xl);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-subtitle {
+    text-align: center;
+    color: var(--medium-gray);
+    margin-bottom: var(--spacing-lg);
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: var(--spacing-lg);
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: var(--spacing-sm);
+    font-weight: 500;
+    color: var(--dark-gray);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 1px solid var(--light-gray);
+    border-radius: 4px;
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+}
+
+.form-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+}
+
+.form-buttons .btn {
+    flex: 1;
+}
+
+.info-box {
+    background: #f0f8ff;
+    border-left: 4px solid var(--info-color);
+    padding: var(--spacing-md);
+    border-radius: 4px;
+    margin: var(--spacing-lg) 0;
+}
+
+.info-box h3 {
+    color: var(--info-color);
+    margin-bottom: var(--spacing-sm);
+}
+
+.info-box ul {
+    margin-left: var(--spacing-md);
+    color: var(--dark-gray);
+}
+
+/* ========================================================================
+   DASHBOARD
+   ======================================================================== */
+
+.dashboard-section {
+    padding: var(--spacing-xl) 0;
+}
+
+.dashboard-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.dashboard-header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: var(--white);
+    padding: var(--spacing-xl);
+    border-radius: 8px;
+    margin-bottom: var(--spacing-xl);
+}
+
+.dashboard-header h1 {
+    margin: 0;
+    font-size: 32px;
+}
+
+.dashboard-role {
+    margin-top: var(--spacing-sm);
+    opacity: 0.95;
+}
+
+.dashboard-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+}
+
+.dashboard-card {
+    background: var(--white);
+    padding: var(--spacing-xl);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-card h2 {
+    margin-bottom: var(--spacing-lg);
+    color: var(--dark-gray);
+    font-size: 24px;
+}
+
+.ai-info {
+    background: #fff9e6;
+    border-left: 4px solid var(--warning-color);
+    padding: var(--spacing-md);
+    border-radius: 4px;
+    margin-bottom: var(--spacing-lg);
+    color: #666;
+}
+
+/* ========================================================================
+   REQUESTS LIST
+   ======================================================================== */
+
+.requests-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.request-item {
+    background: var(--light-gray);
+    padding: var(--spacing-lg);
+    border-radius: 6px;
+    border-left: 4px solid var(--primary-color);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--spacing-lg);
+    align-items: start;
+}
+
+.request-info h3 {
+    margin: 0 0 var(--spacing-sm) 0;
+    color: var(--dark-gray);
+}
+
+.request-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+}
+
+.request-units {
+    background: var(--primary-color);
+    color: var(--white);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: var(--font-size-sm);
+    font-weight: bold;
+}
+
+.request-id,
+.request-timestamp {
+    color: var(--medium-gray);
+    font-size: var(--font-size-sm);
+}
+
+.request-donor {
+    background: var(--white);
+    padding: var(--spacing-sm);
+    border-radius: 4px;
+    margin-top: var(--spacing-sm);
+}
+
+.request-status {
+    text-align: right;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: var(--font-size-sm);
+}
+
+.status-requested {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status-accepted {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-confirmed {
+    background: #d1ecf1;
+    color: #0c5460;
+}
+
+.status-text {
+    color: var(--medium-gray);
+    font-size: var(--font-size-sm);
+    margin-top: var(--spacing-sm);
+}
+
+/* ========================================================================
+   DONATIONS LIST
+   ======================================================================== */
+
+.donations-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.donation-item {
+    background: var(--light-gray);
+    padding: var(--spacing-lg);
+    border-radius: 6px;
+    border-left: 4px solid var(--success-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.donation-info p {
+    margin: var(--spacing-xs) 0;
+    color: var(--dark-gray);
+}
+
+.donation-badge {
+    background: var(--success-color);
+    color: var(--white);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: var(--font-size-sm);
+}
+
+.donation-count-badge {
+    background: var(--secondary-color);
+    color: var(--white);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: var(--font-size-sm);
+}
+
+/* ========================================================================
+   EMPTY STATE
+   ======================================================================== */
+
+.empty-state {
+    text-align: center;
+    padding: var(--spacing-xxl) var(--spacing-lg);
+    color: var(--medium-gray);
+}
+
+.empty-state p {
+    margin-bottom: var(--spacing-md);
+    font-size: var(--font-size-lg);
+}
+
+/* ========================================================================
+   DONORS SECTION
+   ======================================================================== */
+
+.donors-section {
+    padding: var(--spacing-xl) 0;
+}
+
+.donors-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.donors-container h1 {
+    color: var(--dark-gray);
+    margin-bottom: var(--spacing-md);
+}
+
+.section-subtitle {
+    color: var(--medium-gray);
+    margin-bottom: var(--spacing-xl);
+    font-style: italic;
+}
+
+.donors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+.donor-card {
+    background: var(--white);
+    padding: var(--spacing-lg);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.donor-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.donor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+}
+
+.donor-header h3 {
+    margin: 0;
+    color: var(--dark-gray);
+}
+
+.blood-group-badge {
+    background: var(--primary-color);
+    color: var(--white);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: var(--font-size-sm);
+}
+
+.donor-details p {
+    margin: var(--spacing-sm) 0;
+    color: var(--dark-gray);
+    font-size: var(--font-size-sm);
+}
+
+/* ========================================================================
+   DONOR PROFILE
+   ======================================================================== */
+
+.donor-profile-section {
+    padding: var(--spacing-xl) 0;
+}
+
+.donor-profile-container {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-xl);
+}
+
+.profile-card,
+.donation-history-card {
+    background: var(--white);
+    padding: var(--spacing-xl);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 2px solid var(--light-gray);
+}
+
+.profile-header h1 {
+    margin: 0;
+    color: var(--dark-gray);
+}
+
+.profile-blood-group {
+    background: var(--primary-color);
+    color: var(--white);
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.detail-group {
+    margin-bottom: var(--spacing-lg);
+}
+
+.detail-group h3 {
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-md);
+    font-size: 18px;
+}
+
+.detail-group p {
+    margin: var(--spacing-sm) 0;
+    color: var(--dark-gray);
+}
+
+.detail-group ul {
+    list-style: none;
+    margin-left: var(--spacing-md);
+}
+
+.detail-group li {
+    margin: var(--spacing-sm) 0;
+    color: var(--dark-gray);
+}
+
+.detail-group li:before {
+    content: "→ ";
+    color: var(--primary-color);
+    font-weight: bold;
+    margin-right: var(--spacing-xs);
+}
+
+.donation-history-card h2 {
+    margin-bottom: var(--spacing-lg);
+    color: var(--dark-gray);
+}
+
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.history-item {
+    background: var(--light-gray);
+    padding: var(--spacing-md);
+    border-radius: 4px;
+    border-left: 4px solid var(--success-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+}
+
+.history-info p {
+    margin: var(--spacing-xs) 0;
+    color: var(--dark-gray);
+    font-size: var(--font-size-sm);
+}
+
+.history-stats {
+    text-align: center;
+    padding: var(--spacing-lg);
+    background: var(--light-gray);
+    border-radius: 4px;
+}
+
+.total-donations {
+    font-size: 18px;
+    color: var(--dark-gray);
+    font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    .donor-profile-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
+        gap: var(--spacing-md);
+    }
+}
+
+/* ========================================================================
+   CONFIRMATION PAGE
+   ======================================================================== */
+
+.confirmation-section {
+    padding: var(--spacing-xl) 0;
+}
+
+.confirmation-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.confirmation-container h1 {
+    text-align: center;
+    margin-bottom: var(--spacing-md);
+    color: var(--dark-gray);
+}
+
+.confirmation-subtitle {
+    text-align: center;
+    color: var(--medium-gray);
+    margin-bottom: var(--spacing-xl);
+}
+
+.confirmation-card {
+    background: var(--white);
+    padding: var(--spacing-xl);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.request-details {
+    background: var(--light-gray);
+    padding: var(--spacing-lg);
+    border-radius: 4px;
+    margin-bottom: var(--spacing-lg);
+}
+
+.request-details h2 {
+    color: var(--dark-gray);
+    margin-bottom: var(--spacing-lg);
+    font-size: 20px;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--spacing-sm) 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+}
+
+.detail-label {
+    font-weight: 500;
+    color: var(--dark-gray);
+}
+
+.detail-value {
+    color: var(--medium-gray);
+}
+
+.detail-value code {
+    background: var(--white);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+    color: var(--primary-color);
+}
+
+.confirmation-info {
+    margin: var(--spacing-lg) 0;
+}
+
+.confirmation-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+}
+
+.confirmation-form .btn {
+    width: 100%;
+}
+
+/* ========================================================================
+   FOOTER
+   ======================================================================== */
+
+.footer {
+    background: var(--dark-gray);
+    color: var(--white);
+    text-align: center;
+    padding: var(--spacing-xl) var(--spacing-md);
+    margin-top: var(--spacing-xxl);
+}
+
+.footer p {
+    margin: var(--spacing-sm) 0;
+}
+
+/* ========================================================================
+   RESPONSIVE DESIGN
+   ======================================================================== */
+
+@media (max-width: 768px) {
+    .nav-container {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+    
+    .nav-menu {
+        justify-content: center;
+        gap: var(--spacing-md);
+    }
+    
+    .hero-content h1 {
+        font-size: 32px;
+    }
+    
+    .hero-quote {
+        font-size: 18px;
+    }
+    
+    .features-grid,
+    .donors-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .role-selector {
+        grid-template-columns: 1fr;
+    }
+    
+    .request-item {
+        grid-template-columns: 1fr;
+    }
+    
+    .request-status {
+        text-align: left;
+    }
+    
+    .donation-item {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+}
+
+@media (max-width: 480px) {
+    :root {
+        --spacing-lg: 16px;
+        --spacing-xl: 24px;
+    }
+    
+    .logo-text {
+        font-size: 16px;
+    }
+    
+    .nav-menu {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+    
+    .hero-content h1 {
+        font-size: 24px;
+    }
+    
+    .hero-quote {
+        font-size: 16px;
+    }
+    
+    .hero-buttons {
+        gap: var(--spacing-sm);
+    }
+    
+    .hero-buttons .btn {
+        min-width: 150px;
+    }
+}
+
+/* ========================================================================
+   UTILITY CLASSES
+   ======================================================================== */
+
+.link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+code {
+    background: var(--light-gray);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+    color: var(--primary-color);
+}

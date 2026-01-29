@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Donors - {{ app_name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-icon">🩸</span>
+                <span class="logo-text">{{ app_name }}</span>
+            </div>
+            <ul class="nav-menu">
+                <li><span class="nav-user-info">Welcome, {{ current_user.name }}</span></li>
+                <li><a href="{{ url_for('dashboard') }}" class="nav-link">Dashboard</a></li>
+                <li><a href="{{ url_for('logout') }}" class="nav-link logout-link">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                    <span class="close-alert">&times;</span>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <section class="donors-section">
+            <div class="donors-container">
+                <h1>Available Donors</h1>
+                <p class="section-subtitle">🤖 AI Compatibility Engine Active - Donors are matched based on blood type compatibility</p>
+
+                {% if all_donors %}
+                    <div class="donors-grid">
+                        {% for donor in all_donors %}
+                            <div class="donor-card">
+                                <div class="donor-header">
+                                    <h3>{{ donor.name }}</h3>
+                                    <span class="blood-group-badge">{{ donor.blood_group }}</span>
+                                </div>
+
+                                <div class="donor-details">
+                                    <p><strong>Email:</strong> {{ donor.email }}</p>
+                                    <p><strong>Blood Group:</strong> {{ donor.blood_group }}</p>
+                                    <p><strong>Registered:</strong> {{ donor.registered_at }}</p>
+                                </div>
+
+                                <a href="{{ url_for('donor_profile', donor_email=donor.email) }}" class="btn btn-primary btn-block">View Profile & History</a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="empty-state">
+                        <p>No donors available at this time.</p>
+                        <p>Check back later or help by registering as a donor!</p>
+                    </div>
+                {% endif %}
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 BLOOD Bank Application. {{ app_quote }}</p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.close-alert').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.parentElement.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - {{ app_name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-icon">🩸</span>
+                <span class="logo-text">{{ app_name }}</span>
+            </div>
+            <ul class="nav-menu">
+                <li><span class="nav-user-info">Welcome, {{ current_user.name }}</span></li>
+                {% if role == 'Requestor' %}
+                    <li><a href="{{ url_for('create_request') }}" class="nav-link">Create Request</a></li>
+                    <li><a href="{{ url_for('view_donors') }}" class="nav-link">View Donors</a></li>
+                {% elif role == 'Donor' %}
+                    <li><a href="{{ url_for('view_donors') }}" class="nav-link">All Donors</a></li>
+                {% endif %}
+                <li><a href="{{ url_for('logout') }}" class="nav-link logout-link">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                    <span class="close-alert">&times;</span>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <section class="dashboard-section">
+            <div class="dashboard-container">
+                <div class="dashboard-header">
+                    <h1>Your Dashboard</h1>
+                    <p class="dashboard-role">Role: <strong>{{ role }}</strong></p>
+                </div>
+
+                <!-- REQUESTOR DASHBOARD -->
+                {% if role == 'Requestor' %}
+                    <div class="dashboard-content">
+                        <div class="dashboard-card">
+                            <h2>Your Blood Requests</h2>
+                            
+                            {% if user_requests %}
+                                <div class="requests-list">
+                                    {% for req in user_requests %}
+                                        <div class="request-item">
+                                            <div class="request-info">
+                                                <div class="request-header">
+                                                    <h3>Blood Group: <strong>{{ req.blood_group }}</strong></h3>
+                                                    <span class="request-units">{{ req.units }} Units</span>
+                                                </div>
+                                                <p class="request-id">Request ID: {{ req.id }}</p>
+                                                <p class="request-timestamp">Created: {{ req.timestamp }}</p>
+                                                
+                                                {% if req.donor_name %}
+                                                    <div class="request-donor">
+                                                        <p><strong>Donor:</strong> {{ req.donor_name }} ({{ req.donor_email }})</p>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+
+                                            <div class="request-status">
+                                                {% if req.status == 'Requested' %}
+                                                    <span class="status-badge status-requested">🔄 REQUESTED</span>
+                                                    <p class="status-text">Waiting for a donor to accept</p>
+                                                {% elif req.status == 'Accepted' %}
+                                                    <span class="status-badge status-accepted">✓ ACCEPTED</span>
+                                                    <p class="status-text">A donor has accepted this request</p>
+                                                    <form method="POST" action="{{ url_for('confirm_request', request_id=req.id) }}" style="margin-top: 10px;">
+                                                        <button type="submit" class="btn btn-success btn-sm">Confirm Donation Received</button>
+                                                    </form>
+                                                {% elif req.status == 'Confirmed' %}
+                                                    <span class="status-badge status-confirmed">✓✓ CONFIRMED</span>
+                                                    <p class="status-text">Donation confirmed - Thank you!</p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                <div class="empty-state">
+                                    <p>You haven't created any blood requests yet.</p>
+                                    <a href="{{ url_for('create_request') }}" class="btn btn-primary">Create Your First Request</a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                <!-- DONOR DASHBOARD -->
+                {% elif role == 'Donor' %}
+                    <div class="dashboard-content">
+                        <!-- Active Requests Section -->
+                        <div class="dashboard-card">
+                            <h2>🤖 AI-Recommended Compatible Requests</h2>
+                            <p class="ai-info">These requests are compatible with your blood group: <strong>{{ current_user.blood_group }}</strong></p>
+                            
+                            {% if active_requests %}
+                                <div class="requests-list">
+                                    {% for req in active_requests %}
+                                        <div class="request-item">
+                                            <div class="request-info">
+                                                <div class="request-header">
+                                                    <h3>Blood Group: <strong>{{ req.blood_group }}</strong></h3>
+                                                    <span class="request-units">{{ req.units }} Units</span>
+                                                </div>
+                                                <p class="request-id">Request ID: {{ req.id }}</p>
+                                                <p class="request-timestamp">Created: {{ req.timestamp }}</p>
+                                                <p><strong>Requestor:</strong> {{ req.requestor_name }}</p>
+                                            </div>
+
+                                            <div class="request-status">
+                                                <span class="status-badge status-requested">🔄 ACTIVE</span>
+                                                <p class="status-text">This request is available for donation</p>
+                                                
+                                                {% if req.donor_email %}
+                                                    <p style="margin: 10px 0; color: #666;">Already accepted by another donor</p>
+                                                {% else %}
+                                                    <form method="GET" action="{{ url_for('donate_blood', request_id=req.id) }}">
+                                                        <button type="submit" class="btn btn-success">Accept & Donate</button>
+                                                    </form>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                <div class="empty-state">
+                                    <p>No active blood requests available at this time.</p>
+                                    <p>Check back later or browse donor profiles.</p>
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Donation History Section -->
+                        <div class="dashboard-card">
+                            <h2>Your Donation History</h2>
+                            
+                            {% if donation_history %}
+                                <div class="donations-list">
+                                    {% for donation in donation_history %}
+                                        <div class="donation-item">
+                                            <div class="donation-info">
+                                                <p><strong>Blood Group Donated:</strong> {{ donation.blood_group }}</p>
+                                                <p><strong>Requestor:</strong> {{ donation.requestor_email }}</p>
+                                                <p><strong>Date & Time:</strong> {{ donation.date_time }}</p>
+                                                <p><strong>Request ID:</strong> {{ donation.request_id }}</p>
+                                            </div>
+                                            <span class="donation-badge">✓ Recorded</span>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                <div class="empty-state">
+                                    <p>You haven't made any donations yet.</p>
+                                    <p>Check the compatible requests above and help save lives!</p>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 BLOOD Bank Application. {{ app_quote }}</p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.close-alert').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.parentElement.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>
